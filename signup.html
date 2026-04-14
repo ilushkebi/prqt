@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ka">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <title>GreenFood - რეგისტრაცია</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0b0f0c, #121813);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .auth-card {
+      background: #121813;
+      width: 100%;
+      max-width: 450px;
+      padding: 40px;
+      border-radius: 16px;
+      border: 1px solid #198754;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .auth-card h2 {
+      color: #198754;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #2d382e;
+      border-radius: 10px;
+      background: #1a221b;
+      color: #e0e0e0;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #198754;
+      box-shadow: 0 0 5px rgba(25,135,84,0.5);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #198754;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #157347;
+    }
+
+    .card-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .card-footer a {
+      color: #198754;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="auth-card">
+  <h2> რეგისტრაცია</h2>
+
+  <form onsubmit="signup(event)">
+    <input type="text" id="firstname" placeholder="სახელი" class="form-control" required>
+    <input type="text" id="lastname" placeholder="გვარი" class="form-control" required>
+    <input type="email" id="email" placeholder="Email" class="form-control" required>
+    <input type="tel" id="phone" placeholder="ტელეფონი" class="form-control" required>
+    <input type="password" id="password" placeholder="პაროლი" class="form-control" required>
+
+    <button type="submit" class="btn-submit">რეგისტრაცია</button>
+  </form>
+
+  <div class="card-footer">
+    უკვე გაქვთ ანგარიში? <a href="login.html">შესვლა</a>
+  </div>
+</div>
+
+<script>
+function signup(event) {
+  event.preventDefault();
+
+  axios.post("https://rentcar.stepprojects.ge/api/Users/register", {
+    phoneNumber: document.getElementById("phone").value,
+    password: document.getElementById("password").value,
+    email: document.getElementById("email").value,
+    firstName: document.getElementById("firstname").value,
+    lastName: document.getElementById("lastname").value
+  })
+  .then(() => {
+    Swal.fire({
+      icon: 'success',
+      title: 'წარმატება',
+      text: 'რეგისტრაცია დასრულდა!',
+      background: '#121813',
+      color: '#198754',
+      confirmButtonColor: '#198754'
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+  })
+  .catch(() => {
+    Swal.fire({
+      icon: 'error',
+      title: 'შეცდომა',
+      text: 'რეგისტრაცია ვერ მოხერხდა',
+      background: '#121813',
+      color: '#ff4d4d',
+      confirmButtonColor: '#198754'
+    });
+  });
+}
+</script>
+
+</body>
+</html>
